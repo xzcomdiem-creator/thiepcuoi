@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thiệp Cưới — Gia Hân & Minh Khôi</title>
+<meta name="description" content="Trân trọng kính mời bạn đến chung vui cùng Gia Hân & Minh Khôi">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Loader / envelope intro -->
+<div id="loader">
+  <div class="loader-monogram"><span id="loader-initials">H<span class="amp">&amp;</span>K</span></div>
+</div>
+
+<!-- Dot navigation -->
+<nav class="dot-nav" id="dotNav">
+  <a href="#hero" data-label="Trang chủ" class="active"></a>
+  <a href="#story" data-label="Chuyện tình yêu"></a>
+  <a href="#schedule" data-label="Lịch trình"></a>
+  <a href="#gallery" data-label="Thư viện ảnh"></a>
+  <a href="#map" data-label="Đường đi"></a>
+  <a href="#stay" data-label="Chỗ ở"></a>
+  <a href="#dresscode" data-label="Trang phục"></a>
+  <a href="#faq" data-label="Hỏi đáp"></a>
+</nav>
+
+<!-- Floating music toggle -->
+<button class="music-toggle paused" id="musicToggle" aria-label="Bật / tắt nhạc nền">
+  <div class="bars"><span></span><span></span><span></span></div>
+</button>
+<audio id="bgMusic" loop preload="none"></audio>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="hero">
+  <svg class="hero-vine" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
+    <path d="M-20 780 C 150 700, 120 500, 260 430 S 480 350, 420 200 S 300 60, 420 -20" fill="none" stroke="#DCC793" stroke-width="1.4"/>
+    <path d="M820 20 C 650 120, 690 320, 550 400 S 320 470, 380 620 S 500 760, 380 820" fill="none" stroke="#DCC793" stroke-width="1.4"/>
+  </svg>
+
+  <p class="hero-greeting" id="guestGreeting">Trân trọng kính mời</p>
+  <h1 class="hero-names">
+    <span id="brideName">Gia Hân</span><span class="amp">&amp;</span><span id="groomName">Minh Khôi</span>
+  </h1>
+  <p class="hero-tagline" id="heroTagline">Chúng tôi sắp về chung một nhà</p>
+  <p class="hero-date" id="heroDateText">14 . 02 . 2027</p>
+
+  <p class="countdown-title" id="countdownTitle">Đếm ngược đến ngày trọng đại</p>
+  <div class="countdown" id="heroCountdown" data-target=""></div>
+
+  <div class="hero-cta">
+    <div class="dropdown" id="calendarDropdown">
+      <button class="btn solid" id="calendarBtn" type="button">＋ Lưu vào lịch</button>
+      <div class="dropdown-menu" id="calendarMenu"></div>
+    </div>
+    <a href="#schedule" class="btn">Xem lịch trình</a>
+  </div>
+
+  <div class="scroll-cue"><span class="line"></span>Kéo xuống</div>
+</header>
+
+<!-- ============ LOVE STORY ============ -->
+<section class="section" id="story">
+  <span class="section-eyebrow">Our Story</span>
+  <h2 class="section-title reveal">Câu chuyện của chúng tôi</h2>
+  <div class="vine-divider reveal">
+    <svg viewBox="0 0 140 24"><path d="M0 12 Q 35 0 70 12 T 140 12" fill="none" stroke="#B99A5B" stroke-width="1.4"/><circle cx="70" cy="12" r="3" fill="#D8A7A1"/></svg>
+  </div>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<!-- ============ SCHEDULE ============ -->
+<section class="section" id="schedule">
+  <span class="section-eyebrow">Lịch Trình</span>
+  <h2 class="section-title reveal">Các Nghi Lễ</h2>
+  <p class="section-sub reveal">Mỗi nghi lễ diễn ra tại một địa điểm — quý khách vui lòng lưu ý giờ giấc và địa chỉ riêng cho từng lễ.</p>
+  <div class="schedule-grid" id="scheduleGrid"></div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="section" id="gallery">
+  <span class="section-eyebrow">Kỷ Niệm</span>
+  <h2 class="section-title reveal">Thư Viện Ảnh &amp; Video</h2>
+  <div class="vine-divider reveal">
+    <svg viewBox="0 0 140 24"><path d="M0 12 Q 35 0 70 12 T 140 12" fill="none" stroke="#B99A5B" stroke-width="1.4"/><circle cx="70" cy="12" r="3" fill="#D8A7A1"/></svg>
+  </div>
+  <div class="gallery-grid reveal" id="galleryGrid"></div>
+  <div class="video-wrap reveal" id="videoWrap"></div>
+</section>
+
+<!-- ============ MAP + QR ============ -->
+<section class="section" id="map">
+  <span class="section-eyebrow">Đường Đi</span>
+  <h2 class="section-title reveal">Chỉ Đường Đến Nơi Tổ Chức</h2>
+  <p class="section-sub reveal">Quét mã QR để mở bản đồ chỉ đường, hoặc mừng cưới trực tuyến qua mã ngân hàng bên dưới.</p>
+  <div class="map-block reveal">
+    <div class="map-frame">
+      <iframe id="mapFrame" src="" loading="lazy" allowfullscreen title="Bản đồ nơi tổ chức"></iframe>
+    </div>
+    <div class="map-side">
+      <h3>Địa điểm chính</h3>
+      <p id="mainVenueText" style="color:var(--ink-soft); font-size:.9rem;"></p>
+      <div class="qr-row">
+        <div class="qr-card">
+          <img id="qrMap" src="" alt="QR chỉ đường Google Maps">
+          <span>Quét để chỉ đường</span>
+        </div>
+        <div class="qr-card">
+          <img id="qrBank" src="" alt="QR mừng cưới">
+          <span>QR mừng cưới</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOTELS ============ -->
+<section class="section" id="stay">
+  <span class="section-eyebrow">Chỗ Ở</span>
+  <h2 class="section-title reveal">Gợi Ý Khách Sạn Gần Đây</h2>
+  <p class="section-sub reveal">Dành cho quý khách ở xa cần sắp xếp chỗ nghỉ qua đêm.</p>
+  <div class="hotel-list reveal" id="hotelList"></div>
+</section>
+
+<!-- ============ DRESS CODE ============ -->
+<section class="section" id="dresscode">
+  <span class="section-eyebrow">Dress Code</span>
+  <h2 class="section-title reveal">Gợi Ý Trang Phục</h2>
+  <p class="section-sub reveal" id="dressIntro"></p>
+  <div class="palette-row reveal" id="paletteRow"></div>
+  <p class="dress-note reveal" id="dressNote"></p>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <span class="section-eyebrow">Hỏi Đáp</span>
+  <h2 class="section-title reveal">Một Vài Điều Cần Biết</h2>
+  <div class="faq-list reveal" id="faqList"></div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="monogram" id="footerMonogram">H &amp; K</div>
+  <p class="thanks">Sự hiện diện của bạn là món quà quý giá nhất đối với chúng tôi. Rất mong được đón tiếp bạn trong ngày trọng đại này.</p>
+  <p class="credit">Made with love — 2027</p>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Đóng">×</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Ảnh trước">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Ảnh sau">›</button>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
