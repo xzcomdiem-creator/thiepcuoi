@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xác nhận tham dự — Gia Hân & Minh Khôi</title>
+<meta name="description" content="Xác nhận tham dự tiệc cưới Gia Hân & Minh Khôi">
+<link rel="stylesheet" href="css/rsvp.css">
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <div class="mini-header">
+    <a href="index.html"><span class="mono">H &amp; K</span></a>
+  </div>
+
+  <div id="deadlineBanner" class="deadline-banner" style="display:none;">
+    ⏳ Vui lòng phản hồi trước ngày <strong id="deadlineDate">&nbsp;</strong>
+  </div>
+
+  <div class="card">
+
+    <!-- Trạng thái đang tải -->
+    <div id="loadingState" style="text-align:center;padding:40px 0;color:var(--muted);">
+      Đang tải thông tin lời mời…
+    </div>
+
+    <!-- Không tìm thấy khách -->
+    <div id="notFoundState" style="display:none;text-align:center;padding:20px 0;">
+      <h1 class="page-title">Không tìm thấy lời mời</h1>
+      <p class="subtitle">Đường dẫn này không đúng hoặc đã hết hạn. Vui lòng liên hệ cô dâu &amp; chú rể để được gửi lại liên kết xác nhận.</p>
+    </div>
+
+    <!-- Đã phản hồi trước đó -->
+    <div id="alreadyRespondedState" style="display:none;">
+      <span class="eyebrow">Cảm ơn bạn</span>
+      <h1 class="page-title">Bạn đã xác nhận rồi</h1>
+      <p class="subtitle" id="alreadyRespondedText">Chúng tôi đã ghi nhận phản hồi của bạn.</p>
+      <button class="btn btn-ghost" id="editResponseBtn" type="button">Chỉnh sửa lại phản hồi</button>
+    </div>
+
+    <!-- Form chính -->
+    <div id="rsvpFormState" style="display:none;">
+
+      <div class="seal-stage">
+        <div class="seal">H&amp;K</div>
+        <div class="guest-name-reveal" id="guestNameReveal">Kính gửi, —</div>
+        <div class="guest-meta" id="guestMeta"></div>
+      </div>
+
+      <span class="eyebrow">Rsvp</span>
+      <h1 class="page-title">Xác nhận tham dự</h1>
+      <p class="subtitle">Sự hiện diện của bạn là niềm vinh hạnh với chúng tôi. Vui lòng phản hồi giúp gia đình chuẩn bị chu đáo nhất.</p>
+
+      <form id="rsvpForm" novalidate>
+
+        <div class="field">
+          <label for="guestNameInput">Họ và tên</label>
+          <input type="text" id="guestNameInput" readonly>
+        </div>
+
+        <div class="field">
+          <label>Bạn có thể tham dự không?</label>
+          <div class="choice-group" id="attendGroup">
+            <label class="choice-pill" data-value="yes">
+              <input type="radio" name="attending" value="yes">
+              🎉 Tham dự
+            </label>
+            <label class="choice-pill" data-value="no">
+              <input type="radio" name="attending" value="no">
+              💌 Xin phép vắng
+            </label>
+          </div>
+        </div>
+
+        <div class="attending-detail" id="attendingDetail">
+
+          <div class="field">
+            <label>Số người tham dự (kể cả bạn)</label>
+            <div class="stepper">
+              <button type="button" id="decBtn">−</button>
+              <span class="count" id="guestCount">1</span>
+              <button type="button" id="incBtn">+</button>
+            </div>
+            <p class="hint" id="maxGuestHint"></p>
+          </div>
+
+          <div class="field">
+            <label>Thực đơn</label>
+            <div class="choice-group" id="mealGroup">
+              <label class="choice-pill" data-value="man">
+                <input type="radio" name="meal" value="man">
+                🍖 Mặn
+              </label>
+              <label class="choice-pill" data-value="chay">
+                <input type="radio" name="meal" value="chay">
+                🥦 Chay
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="field">
+          <label for="messageInput">Lời nhắn gửi cô dâu chú rể (không bắt buộc)</label>
+          <textarea id="messageInput" maxlength="300" placeholder="Chúc mừng hạnh phúc..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitBtn">Gửi xác nhận</button>
+        <p class="form-msg" id="formMsg"></p>
+      </form>
+
+      <div class="gift-block">
+        <h3>Mừng cưới trực tuyến</h3>
+        <p>Nếu không thể trực tiếp gửi lời chúc, quý khách có thể mừng cưới qua tài khoản bên dưới.</p>
+        <div class="gift-qr">
+          <figure>
+            <img src="assets/qr/qr-bank.png" alt="QR chuyển khoản mừng cưới" loading="lazy">
+            <figcaption>QR mừng cưới</figcaption>
+          </figure>
+        </div>
+        <button class="copy-account" id="copyAccountBtn" type="button">📋 Sao chép số tài khoản</button>
+      </div>
+
+      <div class="share-row">
+        <a class="share-btn" id="shareZalo" title="Chia sẻ qua Zalo" target="_blank" rel="noopener">Z</a>
+        <a class="share-btn" id="shareFacebook" title="Chia sẻ qua Facebook" target="_blank" rel="noopener">f</a>
+        <a class="share-btn" id="shareMessenger" title="Chia sẻ qua Messenger" target="_blank" rel="noopener">M</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <p class="mini-footer">Gia Hân &amp; Minh Khôi · 14.02.2027</p>
+</div>
+
+<script type="module" src="js/rsvp.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản trị — Gia Hân & Minh Khôi</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="admin-topbar">
+  <div class="admin-brand">H &amp; K
+    <small>Trang quản trị khách mời</small>
+  </div>
+  <button class="logout-btn" id="logoutBtn">Đăng xuất</button>
+</div>
+
+<div class="admin-wrap">
+
+  <div class="stat-grid" id="statGrid">
+    <div class="stat-card"><div class="num" id="statTotal">–</div><div class="label">Tổng khách mời</div></div>
+    <div class="stat-card"><div class="num" id="statConfirmed">–</div><div class="label">Đã tham dự</div></div>
+    <div class="stat-card"><div class="num" id="statDeclined">–</div><div class="label">Báo bận</div></div>
+    <div class="stat-card"><div class="num" id="statPending">–</div><div class="label">Chưa phản hồi</div></div>
+    <div class="stat-card"><div class="num" id="statHeadcount">–</div><div class="label">Tổng số người dự</div></div>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="admin-tab active" data-tab="guests">Danh sách khách mời</button>
+    <button class="admin-tab" data-tab="guestbook">Sổ lưu bút</button>
+  </div>
+
+  <!-- ================= GUESTS PANEL ================= -->
+  <div class="panel" id="panel-guests">
+    <div class="panel-head">
+      <h2>Khách mời</h2>
+      <div class="panel-actions">
+        <input type="text" class="search-input" id="guestSearch" placeholder="Tìm theo tên...">
+        <select class="search-input" id="guestFilter">
+          <option value="all">Tất cả trạng thái</option>
+          <option value="yes">Đã xác nhận</option>
+          <option value="no">Báo bận</option>
+          <option value="pending">Chưa phản hồi</option>
+        </select>
+        <button class="btn-sm" id="exportCsvBtn">⬇ Xuất CSV</button>
+        <button class="btn-sm primary" id="addGuestBtn">+ Thêm khách</button>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tên khách</th>
+            <th>SĐT</th>
+            <th>Tối đa</th>
+            <th>Trạng thái</th>
+            <th>Số dự</th>
+            <th>Thực đơn</th>
+            <th>Lời nhắn</th>
+            <th>Liên kết RSVP</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="guestTableBody">
+          <tr class="empty-row"><td colspan="9">Đang tải dữ liệu…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= GUESTBOOK PANEL ================= -->
+  <div class="panel" id="panel-guestbook" style="display:none;">
+    <div class="panel-head">
+      <h2>Lời chúc từ khách mời</h2>
+      <input type="text" class="search-input" id="gbSearch" placeholder="Tìm theo tên hoặc nội dung...">
+    </div>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tên</th>
+            <th>Lời chúc</th>
+            <th>Thời gian</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="guestbookTableBody">
+          <tr class="empty-row"><td colspan="4">Đang tải dữ liệu…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= ADD / EDIT GUEST MODAL ================= -->
+<div class="modal-backdrop" id="guestModalBackdrop" style="display:none;">
+  <div class="modal">
+    <h3 id="guestModalTitle">Thêm khách mời</h3>
+    <form id="guestForm">
+      <input type="hidden" id="guestDocId">
+      <div class="field">
+        <label for="modalGuestName">Họ và tên</label>
+        <input type="text" id="modalGuestName" required>
+      </div>
+      <div class="field">
+        <label for="modalGuestPhone">Số điện thoại (không bắt buộc)</label>
+        <input type="text" id="modalGuestPhone">
+      </div>
+      <div class="field">
+        <label for="modalGuestMax">Số khách tối đa</label>
+        <input type="number" id="modalGuestMax" min="1" max="10" value="1" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-sm" id="guestModalCancel">Hủy</button>
+        <button type="submit" class="btn-sm primary" id="guestModalSave">Lưu</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>
