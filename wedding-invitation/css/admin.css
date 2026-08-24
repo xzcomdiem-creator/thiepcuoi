@@ -1,0 +1,111 @@
+/* ==========================================================
+   ADMIN.CSS — dùng cho login.html và admin.html
+   ========================================================== */
+
+body.admin-body{ background: var(--ivory); }
+
+/* ---------- LOGIN ---------- */
+.login-wrap{
+  min-height: 100svh; display:flex; align-items:center; justify-content:center; padding: 24px;
+}
+.login-card{
+  width: 100%; max-width: 380px; background:#fff; border: 1px solid var(--line);
+  padding: 40px 34px; text-align:center; box-shadow: 0 14px 40px rgba(20,39,32,.08);
+}
+.login-card .monogram-sm{ font-family: var(--display); color: var(--gold); font-size:1.4rem; margin-bottom: 6px; }
+.login-card h1{ font-size:1.3rem; margin-bottom: 26px; }
+.login-card .field{ text-align:left; margin-bottom: 20px; }
+.login-card .btn{ width:100%; justify-content:center; background: var(--pine); border-color: var(--pine); color: var(--ivory); }
+.login-card .btn:hover{ background: var(--gold); border-color: var(--gold); color: var(--pine-deep); }
+.login-card .back-link{ display:block; margin-top: 22px; font-size:.8rem; color: var(--ink-soft); }
+
+/* ---------- ADMIN SHELL ---------- */
+.admin-bar{
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
+  padding: 18px 28px; background: var(--pine-deep); color: var(--ivory);
+}
+.admin-bar .brand{ font-family: var(--display); font-size:1.1rem; color: var(--gold-soft); }
+.admin-bar .actions{ display:flex; gap:10px; align-items:center; }
+.admin-bar a, .admin-bar button{
+  font-size:.8rem; padding: 8px 16px; border-radius: var(--radius);
+  border: 1px solid var(--gold-soft); color: var(--ivory); background:transparent;
+}
+.admin-bar a:hover, .admin-bar button:hover{ background: var(--gold-soft); color: var(--pine-deep); }
+
+.admin-wrap{ max-width: 1080px; margin: 0 auto; padding: 32px 24px 90px; }
+
+.stats-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap:16px; margin-bottom: 34px; }
+.stat-card{ background:#fff; border:1px solid var(--line); padding: 20px; text-align:center; }
+.stat-card .num{ font-family: var(--display); font-size:1.8rem; color: var(--pine-deep); }
+.stat-card .lbl{ font-size:.76rem; color: var(--ink-soft); letter-spacing:.03em; margin-top:4px; }
+
+.admin-section{ background:#fff; border:1px solid var(--line); margin-bottom: 30px; }
+.admin-section-head{
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  padding: 18px 22px; border-bottom:1px solid var(--line);
+}
+.admin-section-head h2{ font-size:1.05rem; }
+.admin-section-head .tools{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.admin-section-head input[type="text"]{
+  padding: 8px 12px; border:1px solid var(--line); border-radius: var(--radius); font-size:.82rem; font-family: var(--body);
+}
+.admin-section-head .btn{ padding: 8px 16px; font-size:.78rem; }
+
+.table-scroll{ overflow-x:auto; }
+table.admin-table{ width:100%; border-collapse: collapse; font-size:.85rem; }
+table.admin-table th, table.admin-table td{ padding: 12px 16px; text-align:left; border-bottom:1px solid var(--line); white-space:nowrap; }
+table.admin-table td.wrap{ white-space:normal; max-width: 260px; }
+table.admin-table th{ color: var(--ink-soft); font-weight:600; font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; background: rgba(31,58,46,.03); }
+table.admin-table tbody tr:hover{ background: rgba(185,154,91,.06); }
+
+.badge{ display:inline-block; padding: 3px 10px; border-radius:999px; font-size:.72rem; font-weight:600; }
+.badge.yes{ background: rgba(31,58,46,.12); color: var(--pine-deep); }
+.badge.no{ background: rgba(216,167,161,.3); color:#8a3b34; }
+
+.row-delete{ border:1px solid rgba(216,167,161,.6); color:#8a3b34; background:transparent; padding: 5px 12px; border-radius: var(--radius); font-size:.74rem; }
+.row-delete:hover{ background: rgba(216,167,161,.25); }
+
+.admin-empty{ padding: 30px 22px; text-align:center; color: var(--ink-soft); font-size:.88rem; }
+
+.admin-section-head select{
+  padding: 8px 12px; border:1px solid var(--line); border-radius: var(--radius); font-size:.82rem; font-family: var(--body); background:#fff;
+}
+
+/* ---------- QUẢN LÝ KHÁCH MỜI ---------- */
+.guest-forms{ display:grid; grid-template-columns: 1.4fr 1fr; gap: 24px; padding: 22px; }
+.guest-form-col label{ display:block; font-size:.85rem; font-weight:600; color: var(--pine-deep); margin-bottom:6px; }
+.guest-form-col .hint{ font-size:.76rem; color: var(--ink-soft); margin-bottom:10px; }
+.guest-form-col .hint code{ background: rgba(31,58,46,.06); padding:1px 5px; border-radius:4px; }
+.guest-form-col textarea, .guest-form-col input[type="text"]{
+  width:100%; padding:10px 12px; border:1px solid var(--line); border-radius: var(--radius);
+  font-family: var(--body); font-size:.85rem; margin-bottom:10px; resize: vertical;
+}
+.guest-form-col .btn{ font-size:.82rem; padding:9px 18px; }
+
+.link-cell{ display:flex; align-items:center; gap:8px; max-width: 260px; }
+.link-cell input{
+  flex:1; min-width:0; font-size:.76rem; padding:6px 8px; border:1px solid var(--line); border-radius: var(--radius);
+  background: rgba(31,58,46,.03); color: var(--ink-soft);
+}
+.copy-btn{
+  border:1px solid var(--gold-soft); background:transparent; color: var(--pine-deep);
+  padding:5px 10px; border-radius: var(--radius); font-size:.72rem; white-space:nowrap;
+}
+.copy-btn:hover{ background: var(--gold-soft); color:#fff; }
+.copy-btn.copied{ background: var(--pine-deep); border-color: var(--pine-deep); color:#fff; }
+
+.badge.muted{ background: rgba(31,58,46,.06); color: var(--ink-soft); }
+
+/* ---------- SAO LƯU ---------- */
+.backup-block{ padding: 22px; }
+.backup-block .hint{ font-size:.82rem; color: var(--ink-soft); margin-bottom:14px; line-height:1.6; }
+.backup-block .btn{ font-size:.82rem; padding:9px 20px; }
+
+.backup-banner{
+  background: rgba(216,167,161,.25); border:1px solid rgba(216,167,161,.6); color:#8a3b34;
+  padding: 12px 18px; border-radius: var(--radius); font-size:.82rem; margin-bottom:20px;
+}
+
+@media (max-width: 720px){
+  .guest-forms{ grid-template-columns: 1fr; }
+}

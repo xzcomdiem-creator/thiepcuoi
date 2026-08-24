@@ -1,0 +1,112 @@
+rules_version = '2';
+
+/* ============================================================
+   FIRESTORE.RULES
+   Cách nạp: Firebase Console → Firestore Database → tab Rules →
+   dán đè nội dung file này → Publish.
+   (Hoặc dùng Firebase CLI: firebase deploy --only firestore:rules)
+
+   Ý tưởng bảo mật chính:
+   - Khách (chưa đăng nhập) CHỈ được:
+       + tạo/sửa đúng 1 tài liệu RSVP của chính họ (biết trước ID)
+       + đọc đúng 1 tài liệu RSVP nếu biết ID (không liệt kê được
+         toàn bộ danh sách khách — Firestore phân biệt "get theo ID"
+         và "list/query cả collection")
+       + tạo lời chúc mới trong sổ lưu bút, và đọc toàn bộ sổ lưu bút
+         (vì sổ lưu bút vốn công khai)
+       + đọc đúng 1 tài liệu khách mời nếu biết mã (để cá nhân hoá
+         thiệp), và chỉ được cập nhật các trường ĐẾM LƯỢT XEM của
+         đúng tài liệu đó (không được đổi tên/ghi chú, không xoá).
+   - Chỉ tài khoản ADMIN THẬT (đăng nhập bằng email/mật khẩu thật ở
+     trang login.html — KHÔNG phải đăng nhập ẩn danh) mới được LIỆT KÊ
+     toàn bộ RSVP/khách mời, tạo/xoá danh sách khách, và xoá dữ liệu.
+     Đây là lý do trang quản trị đã chuyển từ "1 mật khẩu viết cứng
+     trong JS" sang tài khoản Firebase Authentication thật — xem mục
+     "Thiết lập đăng nhập admin" trong README.md.
+   - Đây là mức bảo mật vừa đủ cho 1 thiệp cưới cá nhân, KHÔNG tương
+     đương hệ thống xác thực máy chủ thật sự cho dữ liệu nhạy cảm.
+   ============================================================ */
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admin thật: đã đăng nhập VÀ không phải bằng phương thức ẩn danh.
+    // (Trước đây trang admin dùng đăng nhập ẩn danh + so mật khẩu trong JS —
+    // nay dùng tài khoản Email/Password thật nên có thể phân biệt rõ ràng.)
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    function isValidText(v, maxLen) {
+      return v is string && v.size() <= maxLen;
+    }
+
+    function isValidRsvp(d) {
+      return isValidText(d.name, 100)
+        && d.attending is bool
+        && d.guestCount is int
+        && d.guestCount >= 1 && d.guestCount <= 20
+        && (d.meal == null || d.meal in ['chay', 'man'])
+        && isValidText(d.message, 500);
+    }
+
+    match /rsvps/{rsvpId} {
+      // Khách có thể mở lại đúng RSVP của mình nếu biết ID (link riêng
+      // hoặc lưu trong trình duyệt) — nhưng KHÔNG thể liệt kê cả danh sách.
+      allow get: if true;
+      allow list: if isAdmin();
+
+      allow create: if isValidRsvp(request.resource.data)
+        && request.resource.data.createdAt == request.time;
+
+      allow update: if isValidRsvp(request.resource.data)
+        && request.resource.data.updatedAt == request.time
+        // không cho đổi ngược thời gian tạo ban đầu
+        && (!('createdAt' in resource.data) || request.resource.data.createdAt == resource.data.createdAt);
+
+      allow delete: if isAdmin();
+    }
+
+    match /guestbook/{msgId} {
+      // Sổ lưu bút công khai — ai cũng đọc được.
+      allow read: if true;
+
+      allow create: if isValidText(request.resource.data.name, 60)
+        && isValidText(request.resource.data.message, 300)
+        && request.resource.data.createdAt == request.time;
+
+      // Không cho sửa lời chúc sau khi gửi — chỉ admin mới được xoá (kiểm duyệt).
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    match /guests/{guestCode} {
+      // Khách chỉ đọc được ĐÚNG tài liệu của mình nếu biết mã (get theo ID),
+      // không liệt kê được cả danh sách khách mời.
+      allow get: if true;
+      allow list: if isAdmin();
+
+      // Chỉ admin tạo/xoá khách (qua màn "Quản lý khách mời" ở trang admin).
+      allow create: if isAdmin()
+        && isValidText(request.resource.data.name, 100)
+        && (!('note' in request.resource.data) || isValidText(request.resource.data.note, 200));
+      allow delete: if isAdmin();
+
+      // Admin được sửa mọi trường. Khách (chưa đăng nhập) CHỈ được sửa các
+      // trường đếm lượt xem khi mở link riêng của mình — không đổi được
+      // tên/ghi chú, không tạo thêm trường lạ.
+      allow update: if isAdmin()
+        || (
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['viewCount', 'lastViewedAt', 'firstViewedAt'])
+          && request.resource.data.name == resource.data.name
+        );
+    }
+
+    // Mặc định chặn mọi collection khác không được khai báo ở trên.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

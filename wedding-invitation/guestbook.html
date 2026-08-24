@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sổ Lưu Bút — Gia Hân & Minh Khôi</title>
+<meta name="description" content="Gửi lời chúc phúc đến Gia Hân & Minh Khôi">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<!-- og:image/og:url dùng URL tuyệt đối — xem giải thích chi tiết trong index.html.
+     Nhớ đổi "https://ten-mien-cua-ban.com" thành domain thật khi deploy. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sổ Lưu Bút — Gia Hân & Minh Khôi">
+<meta property="og:description" content="Gửi lời chúc phúc đến Gia Hân & Minh Khôi">
+<meta property="og:image" content="https://ten-mien-cua-ban.com/assets/images/og-cover.jpg">
+<meta property="og:url" content="https://ten-mien-cua-ban.com/guestbook.html">
+<meta property="og:locale" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://ten-mien-cua-ban.com/guestbook.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Tải font kiểu "không chặn render": trình duyệt tải CSS font song song, không phải đợi
+     xong mới vẽ trang — quan trọng khi khách mở link trên mạng yếu (3G/4G chập chờn). -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/rsvp.css">
+</head>
+<body>
+
+<div class="subpage-header">
+  <a href="index.html" class="back-link">← Về trang thiệp cưới</a>
+  <div class="monogram-sm" id="monogramSm">H &amp; K</div>
+  <h1>Sổ Lưu Bút</h1>
+  <p id="gbIntro"></p>
+</div>
+
+<div class="form-wrap" style="padding-bottom:20px;">
+  <div class="form-card">
+    <form id="guestbookForm" novalidate>
+      <div class="hp-field" aria-hidden="true">
+        <label for="gbWebsite">Để trống trường này</label>
+        <input type="text" id="gbWebsite" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="gbName">Tên của bạn</label>
+        <input type="text" id="gbName" name="name" maxlength="60" required placeholder="Nhập tên của bạn">
+      </div>
+
+      <div class="field">
+        <label for="gbMessage">Lời chúc</label>
+        <textarea id="gbMessage" name="message" maxlength="300" required placeholder="Gửi lời chúc phúc đến cô dâu chú rể..."></textarea>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn solid" id="gbSubmitBtn">Gửi lời chúc</button>
+      </div>
+      <div class="form-status" id="gbStatus"></div>
+    </form>
+  </div>
+  <p class="consent-note">Lời chúc của bạn sẽ hiển thị công khai. Bằng việc gửi, bạn đồng ý với <a href="privacy.html">Chính sách bảo mật</a> và <a href="terms.html">Điều khoản sử dụng</a>.</p>
+</div>
+
+<div class="form-wrap" style="padding-top:0;">
+  <div class="gb-list" id="gbList">
+    <p class="gb-empty">Đang tải lời chúc...</p>
+  </div>
+  <button class="btn ghost-dark gb-loadmore" id="gbLoadMore" style="display:none;">Xem thêm lời chúc</button>
+</div>
+
+<script src="js/config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/guestbook.js"></script>
+</body>
+</html>

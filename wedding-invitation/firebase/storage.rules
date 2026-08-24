@@ -1,0 +1,23 @@
+rules_version = '2';
+
+/* ============================================================
+   STORAGE.RULES
+   Dự án hiện tại KHÔNG dùng Firebase Storage — ảnh/video/nhạc được
+   host trực tiếp cùng website tĩnh (assets/images, assets/videos,
+   assets/music) và deploy qua Firebase Hosting hoặc bất kỳ static
+   host nào khác.
+
+   File này chỉ là hàng rào mặc định: chặn toàn bộ đọc/ghi Storage để
+   tránh rủi ro nếu ai đó lỡ bật Storage cho project. Nếu sau này bạn
+   muốn cho khách UPLOAD ảnh trực tiếp (ví dụ ảnh "check-in" tại tiệc),
+   hãy quay lại chỉnh file này để mở quyền ghi có kiểm soát (giới hạn
+   dung lượng, định dạng ảnh...).
+   ============================================================ */
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,126 @@
+/* ==========================================================
+   RSVP.CSS — dùng chung cho rsvp.html, thankyou.html, guestbook.html
+   Kế thừa biến màu / font từ css/style.css (luôn nạp trước file này).
+   ========================================================== */
+
+.form-wrap{
+  max-width: 560px; margin: 0 auto; padding: 20px 24px 100px;
+}
+
+.form-card{
+  background:#fff; border: 1px solid var(--line); padding: 34px 30px;
+  box-shadow: 0 10px 34px rgba(20,39,32,.06);
+}
+
+.field{ margin-bottom: 24px; }
+.field label{
+  display:block; font-size:.8rem; letter-spacing:.04em; color: var(--pine-deep);
+  font-weight:600; margin-bottom: 8px;
+}
+.field .hint{ font-size:.76rem; color: var(--ink-soft); margin-top:6px; }
+
+.field input[type="text"],
+.field input[type="number"],
+.field textarea{
+  width:100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius);
+  font-family: var(--body); font-size: .92rem; color: var(--ink); background: var(--ivory);
+  transition: border-color .2s var(--ease);
+}
+.field input:focus, .field textarea:focus{ outline:none; border-color: var(--gold); }
+.field textarea{ resize: vertical; min-height: 90px; }
+.field input[readonly]{ background: rgba(31,58,46,.05); color: var(--ink-soft); }
+
+/* honeypot — ẩn hoàn toàn khỏi người dùng thật, chỉ bot mới điền vào */
+.hp-field{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+
+.pill-group{ display:flex; gap:10px; flex-wrap:wrap; }
+.pill-choice{ position:relative; }
+.pill-choice input{ position:absolute; opacity:0; inset:0; cursor:pointer; }
+.pill-choice span{
+  display:inline-flex; align-items:center; gap:6px; padding: 10px 20px;
+  border: 1px solid var(--line); border-radius: 999px; font-size:.85rem;
+  color: var(--ink-soft); transition: all .2s var(--ease); cursor:pointer;
+}
+.pill-choice input:checked + span{ background: var(--pine); border-color: var(--pine); color: var(--ivory); }
+.pill-choice input:focus-visible + span{ outline: 2px solid var(--gold); outline-offset:2px; }
+
+.conditional-field{ overflow:hidden; max-height:0; opacity:0; transition: all .3s var(--ease); }
+.conditional-field.show{ max-height: 240px; opacity:1; margin-top: 22px; }
+
+.stepper{ display:flex; align-items:center; gap:14px; }
+.stepper button{
+  width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:#fff;
+  font-size:1.1rem; color: var(--pine-deep); flex:none;
+}
+.stepper button:hover{ background: var(--gold-soft); }
+.stepper input{ width:70px !important; text-align:center; }
+
+.submit-row{ margin-top: 30px; }
+.submit-row .btn{ width:100%; justify-content:center; border-color: var(--pine); background: var(--pine); color: var(--ivory); }
+.submit-row .btn:hover{ background: var(--gold); border-color: var(--gold); color: var(--pine-deep); }
+.submit-row .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+
+.form-status{
+  margin-top: 18px; padding: 12px 16px; border-radius: var(--radius); font-size: .85rem;
+  display:none;
+}
+.form-status.show{ display:block; }
+.form-status.error{ background: rgba(216,167,161,.25); color: #8a3b34; border: 1px solid rgba(216,167,161,.6); }
+.form-status.info{ background: rgba(185,154,91,.15); color: var(--pine-deep); border: 1px solid var(--gold-soft); }
+
+.deadline-banner{
+  max-width: 560px; margin: 0 auto 10px; padding: 14px 20px; text-align:center;
+  background: rgba(185,154,91,.12); border: 1px solid var(--gold-soft); color: var(--pine-deep);
+  font-size: .84rem; border-radius: var(--radius);
+}
+.deadline-banner.closed{ background: rgba(216,167,161,.2); border-color: rgba(216,167,161,.6); color:#8a3b34; }
+
+.closed-note{
+  max-width: 480px; margin: 40px auto; text-align:center; color: var(--ink-soft); font-size:.95rem;
+}
+
+/* ---------- THANK YOU PAGE ---------- */
+.thankyou-wrap{ max-width: 520px; margin: 0 auto; padding: 90px 24px 100px; text-align:center; }
+.thankyou-icon{
+  width: 74px; height:74px; border-radius:50%; background: var(--pine); color: var(--gold-soft);
+  display:flex; align-items:center; justify-content:center; margin: 0 auto 26px; font-size: 2rem;
+}
+.summary-card{
+  text-align:left; background:#fff; border:1px solid var(--line); padding: 24px 26px; margin: 30px 0;
+}
+.summary-card .row{ display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid var(--line); font-size:.88rem; }
+.summary-card .row:last-child{ border-bottom:none; }
+.summary-card .row span:first-child{ color: var(--ink-soft); }
+.summary-card .row span:last-child{ font-weight:600; color: var(--pine-deep); text-align:right; }
+
+/* ---------- CONSENT NOTE (RSVP / GUESTBOOK FORMS) ---------- */
+.consent-note{
+  max-width: 560px; margin: 14px auto 0; text-align:center;
+  font-size:.76rem; color: var(--ink-soft);
+}
+.consent-note a{ text-decoration: underline; text-underline-offset: 2px; color: var(--pine-deep); }
+.consent-note a:hover{ color: var(--gold); }
+
+/* ---------- LEGAL PAGES (privacy.html / terms.html) ---------- */
+.legal-wrap{ max-width: 720px; margin: 0 auto; padding: 10px 24px 100px; }
+.legal-wrap h2{
+  font-size: 1.15rem; margin: 38px 0 12px; color: var(--pine-deep);
+}
+.legal-wrap h2:first-child{ margin-top: 0; }
+.legal-wrap p{ margin-bottom: 14px; font-size: .92rem; color: var(--ink); }
+.legal-wrap ul{ margin: 0 0 14px; padding-left: 20px; }
+.legal-wrap li{ margin-bottom: 8px; font-size: .92rem; color: var(--ink); }
+.legal-wrap .updated{ font-size:.78rem; color: var(--ink-soft); margin-bottom: 34px; }
+.legal-wrap .note-box{
+  background: rgba(185,154,91,.12); border: 1px solid var(--gold-soft);
+  padding: 16px 18px; font-size: .85rem; color: var(--pine-deep); margin: 22px 0;
+}
+
+/* ---------- GUESTBOOK LIST ---------- */
+.gb-list{ max-width: 560px; margin: 34px auto 0; display:flex; flex-direction:column; gap:16px; }
+.gb-card{ background:#fff; border: 1px solid var(--line); padding: 18px 20px; position:relative; }
+.gb-card .gb-name{ font-family: var(--display); color: var(--pine-deep); font-size:1rem; margin-bottom:4px; }
+.gb-card .gb-msg{ color: var(--ink); font-size:.9rem; line-height:1.6; }
+.gb-card .gb-time{ font-size:.7rem; color: var(--ink-soft); margin-top:10px; letter-spacing:.03em; }
+.gb-empty{ text-align:center; color: var(--ink-soft); font-size:.9rem; padding: 30px 0; }
+.gb-loadmore{ display:block; margin: 26px auto 0; }

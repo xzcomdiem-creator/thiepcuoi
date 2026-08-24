@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng Nhập Quản Trị</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Tải font kiểu "không chặn render": trình duyệt tải CSS font song song, không phải đợi
+     xong mới vẽ trang — quan trọng khi khách mở link trên mạng yếu (3G/4G chập chờn). -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/rsvp.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="monogram-sm" id="monogramSm">H &amp; K</div>
+    <h1>Đăng Nhập Quản Trị</h1>
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="loginEmail">Email quản trị</label>
+        <input type="email" id="loginEmail" name="email" required autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="loginPassword">Mật khẩu</label>
+        <input type="password" id="loginPassword" name="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn solid" id="loginBtn">Đăng nhập</button>
+      <div class="form-status" id="loginStatus"></div>
+    </form>
+    <p class="back-link" style="margin-top:14px;">Chưa có tài khoản quản trị? Tạo trong Firebase Console → Authentication → Users (xem README.md).</p>
+    <a href="index.html" class="back-link">← Về trang thiệp cưới</a>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("monogramSm").innerHTML =
+      `${WEDDING_CONFIG.bride.initial} &amp; ${WEDDING_CONFIG.groom.initial}`;
+
+    const form = document.getElementById("loginForm");
+    const btn = document.getElementById("loginBtn");
+    const statusEl = document.getElementById("loginStatus");
+
+    function showStatus(msg, type) {
+      statusEl.textContent = msg;
+      statusEl.className = `form-status show ${type}`;
+    }
+
+    // Chống dò mật khẩu bằng tay: khoá tạm sau nhiều lần sai liên tiếp trên
+    // cùng 1 trình duyệt. Đây là lớp phòng thủ THÊM — lớp chính là Firebase
+    // Authentication kiểm tra thật ở phía máy chủ (không phải so sánh chuỗi
+    // mật khẩu viết cứng trong JS như trước).
+    const LS_FAILS = "admin_login_fails";
+    const LS_LOCK_UNTIL = "admin_login_lock_until";
+    const MAX_FAILS = 5;
+    const LOCK_MS = 60000;
+
+    function isLocked() {
+      const until = parseInt(localStorage.getItem(LS_LOCK_UNTIL) || "0", 10);
+      return Date.now() < until;
+    }
+
+    function registerFailure() {
+      const fails = parseInt(localStorage.getItem(LS_FAILS) || "0", 10) + 1;
+      localStorage.setItem(LS_FAILS, String(fails));
+      if (fails >= MAX_FAILS) {
+        localStorage.setItem(LS_LOCK_UNTIL, String(Date.now() + LOCK_MS));
+        localStorage.setItem(LS_FAILS, "0");
+        return `Sai thông tin đăng nhập nhiều lần — vui lòng thử lại sau ${LOCK_MS / 1000} giây.`;
+      }
+      return "Sai email hoặc mật khẩu, vui lòng thử lại.";
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (isLocked()) {
+        const secs = Math.ceil((parseInt(localStorage.getItem(LS_LOCK_UNTIL), 10) - Date.now()) / 1000);
+        showStatus(`Bạn nhập sai quá nhiều lần — vui lòng thử lại sau ${secs} giây.`, "error");
+        return;
+      }
+
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+
+      if (typeof auth === "undefined") {
+        showStatus("Không kết nối được hệ thống — kiểm tra lại cấu hình Firebase.", "error");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Đang đăng nhập...";
+      try {
+        // Xác thực THẬT qua Firebase Authentication (Email/Password) — tài
+        // khoản tạo sẵn trong Firebase Console → Authentication → Users.
+        await auth.signInWithEmailAndPassword(email, password);
+        localStorage.setItem(LS_FAILS, "0");
+        sessionStorage.setItem("admin_session", String(Date.now()));
+        window.location.href = "admin.html";
+      } catch (err) {
+        console.error(err);
+        showStatus(registerFailure(), "error");
+        btn.disabled = false;
+        btn.textContent = "Đăng nhập";
+      }
+    });
+  });
+</script>
+</body>
+</html>

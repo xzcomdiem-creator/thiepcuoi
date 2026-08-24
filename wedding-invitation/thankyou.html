@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cảm Ơn Bạn — Gia Hân & Minh Khôi</title>
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Tải font kiểu "không chặn render": trình duyệt tải CSS font song song, không phải đợi
+     xong mới vẽ trang — quan trọng khi khách mở link trên mạng yếu (3G/4G chập chờn). -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/rsvp.css">
+</head>
+<body>
+
+<div class="thankyou-wrap">
+  <div class="thankyou-icon">✓</div>
+  <h1>Cảm Ơn Bạn Đã Xác Nhận!</h1>
+  <p id="thankyouMsg">Chúng tôi đã nhận được phản hồi của bạn.</p>
+
+  <div class="summary-card" id="summaryCard" style="display:none;">
+    <div class="row"><span>Họ tên</span><span id="sName"></span></div>
+    <div class="row"><span>Tham dự</span><span id="sAttending"></span></div>
+    <div class="row" id="sCountRow"><span>Số người</span><span id="sCount"></span></div>
+    <div class="row" id="sMealRow"><span>Thực đơn</span><span id="sMeal"></span></div>
+  </div>
+
+  <div class="btn-row">
+    <a href="index.html" class="btn ghost-dark">← Về trang thiệp cưới</a>
+    <a href="guestbook.html" class="btn solid">Gửi lời chúc →</a>
+  </div>
+
+  <p style="margin-top:40px; font-size:.85rem; color:var(--ink-soft);">Mời bạn chia sẻ thiệp cưới đến người thân, bạn bè:</p>
+  <div class="share-row" id="shareButtonsTy"></div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/share.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cfg = WEDDING_CONFIG;
+    document.title = `Cảm Ơn — ${cfg.bride.shortName} & ${cfg.groom.shortName}`;
+
+    const raw = sessionStorage.getItem("rsvpSummary");
+    if (raw) {
+      try {
+        const s = JSON.parse(raw);
+        document.getElementById("sName").textContent = s.name;
+        document.getElementById("sAttending").textContent = s.attending ? "Có tham dự 🎉" : "Vắng mặt 💐";
+        document.getElementById("thankyouMsg").textContent = s.attending
+          ? "Rất mong được đón tiếp bạn trong ngày trọng đại của chúng tôi!"
+          : "Cảm ơn bạn đã dành thời gian phản hồi. Rất tiếc vì không thể đón tiếp bạn lần này!";
+        if (s.attending) {
+          document.getElementById("sCount").textContent = `${s.guestCount} người`;
+          document.getElementById("sMeal").textContent = s.meal === "chay" ? "Chay 🥦" : "Mặn 🍖";
+        } else {
+          document.getElementById("sCountRow").style.display = "none";
+          document.getElementById("sMealRow").style.display = "none";
+        }
+        document.getElementById("summaryCard").style.display = "block";
+      } catch { /* bỏ qua nếu dữ liệu lỗi */ }
+    }
+
+    renderShareButtons("shareButtonsTy");
+  });
+</script>
+</body>
+</html>

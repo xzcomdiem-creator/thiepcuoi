@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chính Sách Bảo Mật — Gia Hân & Minh Khôi</title>
+<meta name="description" content="Chính sách bảo mật dữ liệu khách mời cho thiệp cưới Gia Hân & Minh Khôi">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Tải font kiểu "không chặn render": trình duyệt tải CSS font song song, không phải đợi
+     xong mới vẽ trang — quan trọng khi khách mở link trên mạng yếu (3G/4G chập chờn). -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/rsvp.css">
+</head>
+<body>
+
+<div class="subpage-header">
+  <a href="index.html" class="back-link">← Về trang thiệp cưới</a>
+  <div class="monogram-sm" id="monogramSm">H &amp; K</div>
+  <h1>Chính Sách Bảo Mật</h1>
+  <p id="legalIntro">Trang này giải thích thiệp cưới của <span id="coupleNames">Gia Hân &amp; Minh Khôi</span> thu thập và sử dụng thông tin của quý khách như thế nào.</p>
+</div>
+
+<div class="legal-wrap">
+  <p class="updated">Cập nhật lần cuối: <time datetime="2026-08-24">24/08/2026</time></p>
+
+  <div class="note-box">
+    Đây là một thiệp cưới cá nhân, không phải hệ thống thu thập dữ liệu quy mô lớn. Chúng tôi chỉ dùng thông tin quý khách cung cấp để tổ chức buổi lễ được chu đáo hơn — không dùng cho mục đích quảng cáo hay chia sẻ cho bên thứ ba nào khác ngoài các mục nêu dưới đây.
+  </div>
+
+  <h2>1. Thông tin chúng tôi thu thập</h2>
+  <ul>
+    <li><strong>Khi xác nhận tham dự (RSVP):</strong> họ tên, tình trạng tham dự, số người đi cùng, lựa chọn thực đơn (chay/mặn) và lời nhắn (nếu có).</li>
+    <li><strong>Khi gửi lời chúc (sổ lưu bút):</strong> tên và nội dung lời chúc — nội dung này hiển thị <strong>công khai</strong> cho bất kỳ ai xem trang, vui lòng không để lại thông tin nhạy cảm ở đây.</li>
+    <li><strong>Lượt xem link cá nhân hoá:</strong> nếu quý khách mở link riêng của mình (dạng <code>?to=mã-khách</code>), hệ thống ghi nhận thời điểm và số lần xem để chúng tôi biết ai đã xem thiệp — không thu thập vị trí, IP hay thiết bị.</li>
+    <li><strong>Bộ nhớ trình duyệt (localStorage):</strong> chỉ lưu thời điểm gửi form gần nhất trên máy quý khách, nhằm chống gửi trùng/spam. Không dùng để theo dõi hay quảng cáo.</li>
+  </ul>
+  <p>Chúng tôi <strong>không</strong> yêu cầu và khuyến khích quý khách <strong>không</strong> nhập số điện thoại, CMND/CCCD hoặc số tiền mừng cụ thể vào các trường ở trên.</p>
+
+  <h2>2. Vì sao chúng tôi cần các thông tin này</h2>
+  <ul>
+    <li>Cá nhân hoá lời mời và tổng hợp số lượng khách để báo cho nhà hàng/địa điểm tổ chức.</li>
+    <li>Sắp xếp thực đơn phù hợp (chay/mặn) theo số lượng thực tế.</li>
+    <li>Hiển thị sổ lưu bút để mọi người cùng xem lời chúc.</li>
+  </ul>
+
+  <h2>3. Nơi lưu trữ dữ liệu</h2>
+  <p>Dữ liệu được lưu trên <strong>Firebase/Firestore của Google</strong> — hạ tầng máy chủ đám mây do Google vận hành. Chỉ cô dâu, chú rể và người được cấp tài khoản quản trị (đăng nhập bằng email/mật khẩu thật) mới xem được toàn bộ danh sách RSVP và khách mời.</p>
+
+  <h2>4. Chúng tôi có chia sẻ dữ liệu cho ai không?</h2>
+  <p>Không. Thông tin quý khách cung cấp chỉ phục vụ việc tổ chức lễ cưới này, không được bán, cho thuê hay chia sẻ cho mục đích quảng cáo. Ngoại lệ duy nhất là sổ lưu bút, vốn được thiết kế để <strong>hiển thị công khai</strong> theo đúng mục đích của nó.</p>
+
+  <h2>5. Thời gian lưu trữ</h2>
+  <p>Dữ liệu được giữ lại để phục vụ công tác chuẩn bị và lưu niệm sau lễ cưới. Cô dâu chú rể có thể xoá dữ liệu bất kỳ lúc nào từ trang quản trị.</p>
+
+  <h2>6. Quyền của quý khách</h2>
+  <p>Quý khách có thể yêu cầu xem lại, chỉnh sửa hoặc xoá thông tin mình đã gửi (RSVP hoặc lời chúc) bằng cách liên hệ trực tiếp với cô dâu/chú rể qua thông tin bên dưới.</p>
+
+  <h2>7. Liên hệ</h2>
+  <p>Nếu có bất kỳ câu hỏi nào về việc sử dụng thông tin, vui lòng liên hệ:</p>
+  <p id="legalContact" style="font-weight:600; color:var(--pine-deep);"></p>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cfg = WEDDING_CONFIG;
+    const names = `${cfg.bride.shortName} &amp; ${cfg.groom.shortName}`;
+    document.title = `Chính Sách Bảo Mật — ${cfg.bride.shortName} & ${cfg.groom.shortName}`;
+    document.getElementById("coupleNames").textContent = `${cfg.bride.shortName} & ${cfg.groom.shortName}`;
+    document.getElementById("monogramSm").innerHTML = `${cfg.bride.initial} &amp; ${cfg.groom.initial}`;
+
+    const legal = cfg.legal || {};
+    const parts = [];
+    if (legal.contactEmail) parts.push(`Email: <a href="mailto:${legal.contactEmail}">${legal.contactEmail}</a>`);
+    if (legal.contactPhone) parts.push(`SĐT: ${legal.contactPhone}`);
+    document.getElementById("legalContact").innerHTML = parts.join(" &nbsp;•&nbsp; ") || "Vui lòng liên hệ trực tiếp với cô dâu/chú rể.";
+  });
+</script>
+</body>
+</html>

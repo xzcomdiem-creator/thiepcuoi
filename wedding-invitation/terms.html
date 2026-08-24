@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Điều Khoản Sử Dụng — Gia Hân & Minh Khôi</title>
+<meta name="description" content="Điều khoản sử dụng thiệp cưới trực tuyến Gia Hân & Minh Khôi">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Tải font kiểu "không chặn render": trình duyệt tải CSS font song song, không phải đợi
+     xong mới vẽ trang — quan trọng khi khách mở link trên mạng yếu (3G/4G chập chờn). -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/rsvp.css">
+</head>
+<body>
+
+<div class="subpage-header">
+  <a href="index.html" class="back-link">← Về trang thiệp cưới</a>
+  <div class="monogram-sm" id="monogramSm">H &amp; K</div>
+  <h1>Điều Khoản Sử Dụng</h1>
+  <p>Áp dụng khi quý khách sử dụng trang xác nhận tham dự và sổ lưu bút bên dưới.</p>
+</div>
+
+<div class="legal-wrap">
+  <p class="updated">Cập nhật lần cuối: <time datetime="2026-08-24">24/08/2026</time></p>
+
+  <h2>1. Mục đích của trang này</h2>
+  <p>Đây là thiệp cưới trực tuyến cá nhân, được lập ra để mời và trao đổi thông tin với khách mời của cô dâu chú rể. Trang không phải là dịch vụ thương mại công khai cho công chúng.</p>
+
+  <h2>2. Khi gửi form RSVP hoặc sổ lưu bút, quý khách đồng ý rằng</h2>
+  <ul>
+    <li>Thông tin cung cấp (họ tên, lựa chọn tham dự, lời nhắn...) là chính xác, do chính quý khách nhập.</li>
+    <li>Không đăng nội dung xúc phạm, quảng cáo, spam, vi phạm pháp luật hoặc xâm phạm quyền của người khác trong lời nhắn/lời chúc.</li>
+    <li>Lời chúc gửi ở sổ lưu bút sẽ hiển thị <strong>công khai</strong> trên trang này cho mọi người xem.</li>
+  </ul>
+
+  <h2>3. Quyền kiểm duyệt</h2>
+  <p>Cô dâu, chú rể hoặc người quản trị trang có quyền chỉnh sửa, ẩn hoặc xoá bất kỳ nội dung nào trong sổ lưu bút mà không cần báo trước, nếu nội dung không phù hợp.</p>
+
+  <h2>4. Hạn chót xác nhận (RSVP)</h2>
+  <p>Form RSVP sẽ tự động khoá sau thời hạn được thông báo trên trang, nhằm kịp báo số lượng khách cho nhà hàng/đơn vị tổ chức. Sau thời hạn này, vui lòng liên hệ trực tiếp với cô dâu/chú rể nếu cần thay đổi.</p>
+
+  <h2>5. Giới hạn trách nhiệm</h2>
+  <p>Thông tin về địa điểm, giờ giấc, bản đồ, khách sạn gợi ý... được cung cấp với mục đích tham khảo, có thể thay đổi. Cô dâu chú rể không chịu trách nhiệm cho các sai lệch ngoài ý muốn (vd. thay đổi giờ giấc phút chót, lỗi bản đồ của bên thứ ba) và sẽ cập nhật sớm nhất có thể nếu có thay đổi.</p>
+
+  <h2>6. Dữ liệu cá nhân</h2>
+  <p>Việc thu thập và sử dụng thông tin quý khách cung cấp được nêu chi tiết tại <a href="privacy.html">Chính sách bảo mật</a>.</p>
+
+  <h2>7. Luật áp dụng</h2>
+  <p>Điều khoản này được hiểu và áp dụng theo pháp luật Việt Nam.</p>
+
+  <h2>8. Liên hệ</h2>
+  <p id="legalContact" style="font-weight:600; color:var(--pine-deep);"></p>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cfg = WEDDING_CONFIG;
+    document.title = `Điều Khoản Sử Dụng — ${cfg.bride.shortName} & ${cfg.groom.shortName}`;
+    document.getElementById("monogramSm").innerHTML = `${cfg.bride.initial} &amp; ${cfg.groom.initial}`;
+
+    const legal = cfg.legal || {};
+    const parts = [];
+    if (legal.contactEmail) parts.push(`Email: <a href="mailto:${legal.contactEmail}">${legal.contactEmail}</a>`);
+    if (legal.contactPhone) parts.push(`SĐT: ${legal.contactPhone}`);
+    document.getElementById("legalContact").innerHTML = parts.join(" &nbsp;•&nbsp; ") || "Vui lòng liên hệ trực tiếp với cô dâu/chú rể.";
+  });
+</script>
+</body>
+</html>

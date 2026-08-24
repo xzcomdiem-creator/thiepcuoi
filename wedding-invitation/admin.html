@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản Trị — Thiệp Cưới</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Tải font kiểu "không chặn render": trình duyệt tải CSS font song song, không phải đợi
+     xong mới vẽ trang — quan trọng khi khách mở link trên mạng yếu (3G/4G chập chờn). -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/rsvp.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<div class="admin-bar">
+  <div class="brand" id="adminBrand">Quản trị thiệp cưới</div>
+  <div class="actions">
+    <a href="index.html">Xem trang thiệp</a>
+    <button type="button" id="logoutBtn">Đăng xuất</button>
+  </div>
+</div>
+
+<div class="admin-wrap">
+
+  <div class="backup-banner" id="backupBanner" style="display:none;"></div>
+
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card"><div class="num" id="statResponded">–</div><div class="lbl">Đã phản hồi</div></div>
+    <div class="stat-card"><div class="num" id="statPending">–</div><div class="lbl">Chưa phản hồi (theo DS khách)</div></div>
+    <div class="stat-card"><div class="num" id="statAttendingGuests">–</div><div class="lbl">Tổng số người tham dự</div></div>
+    <div class="stat-card"><div class="num" id="statNotAttending">–</div><div class="lbl">Vắng mặt</div></div>
+    <div class="stat-card"><div class="num" id="statMealChay">–</div><div class="lbl">Suất chay</div></div>
+    <div class="stat-card"><div class="num" id="statMealMan">–</div><div class="lbl">Suất mặn</div></div>
+    <div class="stat-card"><div class="num" id="statGuestbook">–</div><div class="lbl">Lời chúc</div></div>
+    <div class="stat-card"><div class="num" id="statViewed">–</div><div class="lbl">Đã xem link</div></div>
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <h2>Quản lý khách mời &amp; tạo link riêng</h2>
+    </div>
+    <div class="guest-forms">
+      <div class="guest-form-col">
+        <label for="bulkGuestInput">Nhập danh sách khách (mỗi dòng 1 khách)</label>
+        <p class="hint">Mỗi dòng: <code>Tên khách</code> hoặc <code>Tên khách, ghi chú</code> (vd bàn tiệc, SĐT). Hệ thống tự sinh mã &amp; link riêng cho từng người, không trùng với khách đã có.</p>
+        <textarea id="bulkGuestInput" rows="6" placeholder="Anh Gia và gia đình, Bàn 5&#10;Chị Hoa&#10;Bác Thành và Bác Hương, Họ nhà trai"></textarea>
+        <button class="btn solid" id="bulkGuestBtn" type="button">Tạo link hàng loạt</button>
+        <div class="form-status" id="bulkGuestStatus"></div>
+      </div>
+      <div class="guest-form-col">
+        <label for="singleGuestName">Thêm nhanh 1 khách</label>
+        <p class="hint">Dùng khi cần bổ sung thêm khách sau khi đã nhập danh sách chính.</p>
+        <input type="text" id="singleGuestName" placeholder="Tên khách">
+        <input type="text" id="singleGuestNote" placeholder="Ghi chú (không bắt buộc)">
+        <button class="btn ghost-dark" id="singleGuestBtn" type="button">Thêm khách</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <h2>Danh sách khách &amp; link riêng</h2>
+      <div class="tools">
+        <input type="text" id="guestSearch" placeholder="Tìm theo tên...">
+        <select id="guestFilter">
+          <option value="all">Tất cả</option>
+          <option value="viewed">Đã xem link</option>
+          <option value="not-viewed">Chưa xem link</option>
+          <option value="rsvped">Đã RSVP</option>
+          <option value="not-rsvped">Chưa RSVP</option>
+        </select>
+        <button class="btn ghost-dark" id="exportGuestsCsvBtn" type="button">Xuất CSV danh sách link</button>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Tên</th><th>Ghi chú</th><th>Link riêng</th><th>Đã xem?</th><th>Đã RSVP?</th><th></th></tr>
+        </thead>
+        <tbody id="guestTableBody"></tbody>
+      </table>
+    </div>
+    <div class="admin-empty" id="guestEmpty" style="display:none;">Chưa có khách nào — nhập danh sách ở khung phía trên.</div>
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <h2>Danh sách RSVP</h2>
+      <div class="tools">
+        <input type="text" id="rsvpSearch" placeholder="Tìm theo tên...">
+        <button class="btn ghost-dark" id="exportCsvBtn" type="button">Xuất CSV</button>
+        <button class="btn ghost-dark" id="exportExcelBtn" type="button">Xuất Excel báo nhà hàng</button>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Tên</th><th>Tham dự</th><th>Số người</th><th>Thực đơn</th><th>Lời nhắn</th><th>Thời gian</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="rsvpTableBody"></tbody>
+      </table>
+    </div>
+    <div class="admin-empty" id="rsvpEmpty" style="display:none;">Chưa có phản hồi RSVP nào.</div>
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <h2>Sổ lưu bút</h2>
+      <div class="tools">
+        <button class="btn ghost-dark" id="exportGbCsvBtn" type="button">Xuất CSV</button>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="admin-table">
+        <thead><tr><th>Tên</th><th>Lời chúc</th><th>Thời gian</th><th></th></tr></thead>
+        <tbody id="gbTableBody"></tbody>
+      </table>
+    </div>
+    <div class="admin-empty" id="gbEmpty" style="display:none;">Chưa có lời chúc nào.</div>
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <h2>Sao lưu dữ liệu</h2>
+    </div>
+    <div class="backup-block">
+      <p class="hint">Tải toàn bộ RSVP + lời chúc + danh sách khách thành 1 file JSON để lưu trữ riêng, phòng trường hợp cần khôi phục lại. Nên bấm định kỳ (vd. mỗi tuần) — trang này chỉ nhắc bạn, không tự chạy nền được vì đây là website tĩnh không có máy chủ.</p>
+      <button class="btn solid" id="backupBtn" type="button">Sao lưu ngay (.json)</button>
+      <p class="hint" id="lastBackupText" style="margin-top:10px;"></p>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
