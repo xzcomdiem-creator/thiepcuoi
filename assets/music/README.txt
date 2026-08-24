@@ -1,1 +1,0 @@
-Đặt file nhạc nền (background.mp3) vào đây. Cập nhật tên file trong js/config.js -> music.src nếu khác. Lưu ý: hầu hết trình duyệt di động sẽ chặn tự phát nhạc, khách cần bấm nút nhạc ở góc trái màn hình.

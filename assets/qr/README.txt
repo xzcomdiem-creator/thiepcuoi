@@ -1,1 +1,0 @@
-Thư mục này không bắt buộc — mã QR chỉ đường và QR mừng cưới hiện được TẠO TỰ ĐỘNG bằng API công khai (qrserver.com và vietqr.io) ngay trong js/main.js, dựa trên dữ liệu ở js/config.js. Bạn chỉ cần sửa config, không cần tự tạo file QR.
